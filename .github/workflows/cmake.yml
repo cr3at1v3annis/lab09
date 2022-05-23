@@ -1,0 +1,26 @@
+name: CPack
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  Upload_archive_ZIP_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Prepare environment
+        run: cmake --version
+
+      - name: Build files
+        shell: bash
+        run: |
+          mkdir _build && cd _build
+          cmake -DFlag=ARC ..
+          cmake --build .
+          cpack -G ZIP
+      
